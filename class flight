@@ -1,0 +1,38 @@
+class Flight:
+    def __init__(self, flight_number, destination, seat_capacity):
+        # Initialize flight attributes
+        self.flight_number = flight_number  # Unique identifier for the flight
+        self.destination = destination        # Destination city of the flight
+        self.seat_capacity = seat_capacity    # Total number of seats available on the flight
+        self.available_seats = seat_capacity   # Number of seats currently available for booking
+        self.passengers = {}                  # Dictionary to store passengers and their seat numbers
+
+    def book_ticket(self, passenger_name):
+        # Attempt to book a ticket for a passenger
+        if self.available_seats > 0:  # Check if there are available seats
+            seat_number = self.seat_capacity - self.available_seats + 1  # Calculate the next available seat number
+            self.passengers[seat_number] = passenger_name  # Assign the passenger to the seat
+            self.available_seats -= 1  # Decrease the count of available seats
+            return seat_number  # Return the assigned seat number
+        else:
+            return None  # Return None if no seats are available
+
+    def get_details(self):
+        # Return flight details including destination, available seats, and passengers
+        return {
+            "destination": self.destination,
+            "available_seats": self.available_seats,
+            "passengers": self.passengers
+        }
+
+    def get_report(self):
+        # Generate a report for the flight
+        booked_seats = self.seat_capacity - self.available_seats  # Calculate the number of booked seats
+        revenue = booked_seats * 200  # Calculate revenue assuming each ticket costs $200
+        return {
+            "destination": self.destination,
+            "total_seats": self.seat_capacity,
+            "booked_seats": booked_seats,
+            "available_seats": self.available_seats,
+            "revenue": revenue
+        }
