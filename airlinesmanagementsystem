@@ -1,0 +1,47 @@
+class AirlinesManagementSystem:
+    def __init__(self):
+        # Initialize the airlines management system
+        self.flights = {}  # Dictionary to store all flights indexed by flight number
+
+    def add_flight(self, flight_number, destination, seat_capacity):
+        # Add a new flight to the system
+        flight = Flight(flight_number, destination, seat_capacity)  # Create a new Flight object
+        self.flights[flight_number] = flight  # Store the flight in the flights dictionary
+        print("Flight added successfully!")  # Confirmation message
+
+    def book_ticket(self, flight_number, passenger_name):
+        # Book a ticket for a specified flight and passenger
+        if flight_number in self.flights:  # Check if the flight exists
+            seat_number = self.flights[flight_number].book_ticket(passenger_name)  # Attempt to book the ticket
+            if seat_number:
+                print(f"Ticket booked successfully! Seat number: {seat_number}")  # Success message
+            else:
+                print("No available seats!")  # Message if no seats are available
+        else:
+            print("Flight not found!")  # Message if the flight does not exist
+
+    def view_flight(self, flight_number):
+        # Display details of a specified flight
+        if flight_number in self.flights:  # Check if the flight exists
+            details = self.flights[flight_number].get_details()  # Get flight details
+            print("Flight Details:")
+            print(f"- Destination: {details['destination']}")  # Print destination
+            print(f"- Available Seats: {details['available_seats']}")  # Print available seats
+            print("- Passengers:")
+            for seat, name in details['passengers'].items():  # Iterate through passengers
+                print(f"  {seat}. {name} (Seat: {seat})")  # Print each passenger's details
+        else:
+            print("Flight not found!")  # Message if the flight does not exist
+
+    def generate_report(self, flight_number):
+        # Generate a report for a specified flight
+        if flight_number in self.flights:  # Check if the flight exists
+            report = self.flights[flight_number].get_report()  # Get flight report
+            print("Flight Report:")
+            print(f"- Destination: {report['destination']}")  # Print destination
+            print(f"- Total Seats: {report['total_seats']}")  # Print total seats
+            print(f"- Booked Seats: {report['booked_seats']}")  # Print booked seats
+            print(f"- Available Seats: {report['available_seats']}")  # Print available seats
+            print(f"- Revenue: ${report['revenue']:.2f}")  # Print revenue formatted to two decimal places
+        else:
+            print("Flight not found!")  # Message if the flight does not exist
